@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  dev-db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: tweeter
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: tweeter
+    ports:
+      - '5434:5432'
