@@ -18,5 +18,56 @@ model User {
   firstname   String
   lastname    String
   password    String
-  
+  tweets      Tweet[]
+  followers   Follower[]
+  following   Following[]
+  comments    Comment[]
+  likes       Like[]
+}
+
+model Tweet {
+  id          Int @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  description String
+  isPublic    Boolean
+  userId      Int
+  user        User @relation(fields: [userId], references: [id])
+  likes       Like[]
+  comments    Comment[]   
+}
+
+model Follower {
+  id          Int @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User[]
+}
+
+model Following {
+  id          Int @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User[]
+}
+
+model Like {
+  id          Int @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  tweetId     Int
+  tweet       Tweet @relation(fields: [tweetId], references: [id])
+  userId      Int
+  user        User @relation(fields: [userId], references: [id])
+}
+
+model Comment {
+  id          Int @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  description String
+  tweetId     Int
+  tweet       Tweet @relation(fields: [tweetId], references: [id])
+  userId      Int
+  user        User @relation(fields: [userId], references: [id])
 }
