@@ -18,4 +18,19 @@ export class TweetsService {
 
     return tweet;
   }
+
+  async getTweets() {
+    const tweets = await this.prisma.tweet.findMany({
+      include: {
+        user: {
+          select: {
+            firstname: true,
+            lastname: true,
+          },
+        },
+      },
+    });
+
+    return tweets;
+  }
 }
