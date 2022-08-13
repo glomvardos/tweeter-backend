@@ -28,6 +28,7 @@ export class TweetsService {
             lastname: true,
           },
         },
+        comments: true,
       },
     });
 
