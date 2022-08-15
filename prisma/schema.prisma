@@ -22,7 +22,8 @@ model User {
   followers   Follower[]
   following   Following[]
   comments    Comment[]
-  likes       Like[]
+  likesTweet  LikeTweet[]
+  likesComment LikeComment[]
 }
 
 model Tweet {
@@ -33,7 +34,7 @@ model Tweet {
   isPublic    Boolean
   userId      Int
   user        User @relation(fields: [userId], references: [id])
-  likes       Like[]
+  likes  LikeTweet[]
   comments    Comment[]   
 }
 
@@ -51,14 +52,20 @@ model Following {
   user        User[]
 }
 
-model Like {
+model LikeTweet {
   id          Int @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  tweetId     Int
-  tweet       Tweet @relation(fields: [tweetId], references: [id])
   userId      Int
   user        User @relation(fields: [userId], references: [id])
+  tweetId     Int
+  tweet       Tweet @relation(fields: [tweetId], references: [id])
+}
+
+model LikeComment {
+  id          Int @id @default(autoincrement())
+  userId      Int
+  user        User @relation(fields: [userId], references: [id])
+  commentId   Int
+  comment     Comment @relation(fields: [commentId], references: [id])
 }
 
 model Comment {
@@ -70,4 +77,5 @@ model Comment {
   tweet       Tweet @relation(fields: [tweetId], references: [id])
   userId      Int
   user        User @relation(fields: [userId], references: [id])
+  likes       LikeComment[]
 }

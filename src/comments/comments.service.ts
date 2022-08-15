@@ -7,7 +7,7 @@ export class CommentsService {
   constructor(private prisma: PrismaService) {}
 
   async createTweetComment(userId: number, dto: CreateTweetCommentDto) {
-    const comment = this.prisma.comment.create({
+    const comment = await this.prisma.comment.create({
       data: {
         description: dto.description,
         user: {

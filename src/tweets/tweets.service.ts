@@ -7,7 +7,7 @@ export class TweetsService {
   constructor(private prisma: PrismaService) {}
 
   async createTweet(userId: number, dto: CreateTweetDto) {
-    const tweet = this.prisma.tweet.create({
+    const tweet = await this.prisma.tweet.create({
       data: {
         ...dto,
         user: {
@@ -28,7 +28,20 @@ export class TweetsService {
             lastname: true,
           },
         },
-        comments: true,
+        comments: {
+          select: {
+            id: true,
+            createdAt: true,
+            description: true,
+            user: {
+              select: {
+                firstname: true,
+                lastname: true,
+              },
+            },
+            likes: true,
+          },
+        },
       },
     });
 
