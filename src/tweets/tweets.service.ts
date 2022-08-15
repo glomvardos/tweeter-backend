@@ -19,7 +19,7 @@ export class TweetsService {
     return tweet;
   }
 
-  async getTweets() {
+  async getTweets(userId: number) {
     const tweets = await this.prisma.tweet.findMany({
       include: {
         user: {
@@ -39,7 +39,16 @@ export class TweetsService {
                 lastname: true,
               },
             },
-            likes: true,
+            _count: {
+              select: {
+                likes: true,
+              },
+            },
+            likes: {
+              where: {
+                userId,
+              },
+            },
           },
         },
       },
