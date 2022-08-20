@@ -28,6 +28,21 @@ export class TweetsService {
             lastname: true,
           },
         },
+        likes: {
+          where: {
+            userId,
+          },
+        },
+        savedTweets: {
+          where: {
+            userId,
+          },
+        },
+        _count: {
+          select: {
+            savedTweets: true,
+          },
+        },
         comments: {
           select: {
             id: true,

@@ -5,3 +5,8 @@ export class LikeCommentDto {
   @IsInt()
   commentId: number;
 }
+export class LikeTweetDto {
+  @IsNotEmpty()
+  @IsInt()
+  tweetId: number;
+}

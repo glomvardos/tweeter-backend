@@ -6,6 +6,7 @@ import { UserModule } from './user/user.module';
 import { TweetsModule } from './tweets/tweets.module';
 import { CommentsModule } from './comments/comments.module';
 import { LikesModule } from './likes/likes.module';
+import { SavedTweetsModule } from './saved-tweets/saved-tweets.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { LikesModule } from './likes/likes.module';
     TweetsModule,
     CommentsModule,
     LikesModule,
+    SavedTweetsModule,
   ],
 })
 export class AppModule {}
