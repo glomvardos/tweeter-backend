@@ -59,6 +59,11 @@ export class SavedTweetsService {
                 userId,
               },
             },
+            _count: {
+              select: {
+                savedTweets: true,
+              },
+            },
           },
         },
       },

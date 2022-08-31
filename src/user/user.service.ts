@@ -1,5 +1,8 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { PrismaService } from '../prisma/prisma.service';
+import { UpdateUserDto } from './dto/dto';
+import * as argon from 'argon2';
 
 @Injectable()
 export class UserService {
@@ -28,5 +31,38 @@ export class UserService {
 
     delete user.password;
     return user;
+  }
+
+  async updateUser(id: number, dto: UpdateUserDto) {
+    try {
+      const data = dto?.password
+        ? {
+            firstname: dto.firstname,
+            lastname: dto.lastname,
+            email: dto.email.toLowerCase(),
+            password: await argon.hash(dto.password),
+          }
+        : {
+            firstname: dto.firstname,
+            lastname: dto.lastname,
+            email: dto.email.toLowerCase(),
+          };
+
+      const user = await this.prisma.user.update({
+        where: {
+          id,
+        },
+        data: data,
+      });
+      delete user.password;
+      return user;
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code === 'P2002') {
+          throw new ForbiddenException('Email already exists');
+        }
+      }
+      throw error;
+    }
   }
 }
