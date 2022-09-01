@@ -34,7 +34,7 @@ model Tweet {
   description String
   isPublic    Boolean
   userId      Int
-  user        User @relation(fields: [userId], references: [id])
+  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
   likes       LikeTweet[]
   savedTweets  SavedTweet[]
   comments    Comment[]   
@@ -45,7 +45,7 @@ model SavedTweet {
   tweetId     Int
   tweet       Tweet @relation(fields: [tweetId], references: [id])
   userId      Int
-  user        User @relation(fields: [userId], references: [id])
+  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Follower {
@@ -65,7 +65,7 @@ model Following {
 model LikeTweet {
   id          Int @id @default(autoincrement())
   userId      Int
-  user        User @relation(fields: [userId], references: [id])
+  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
   tweetId     Int
   tweet       Tweet @relation(fields: [tweetId], references: [id])
 }
@@ -73,7 +73,7 @@ model LikeTweet {
 model LikeComment {
   id          Int @id @default(autoincrement())
   userId      Int
-  user        User @relation(fields: [userId], references: [id])
+  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
   commentId   Int
   comment     Comment @relation(fields: [commentId], references: [id])
 }
@@ -86,6 +86,6 @@ model Comment {
   tweetId     Int
   tweet       Tweet @relation(fields: [tweetId], references: [id])
   userId      Int
-  user        User @relation(fields: [userId], references: [id])
+  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
   likes       LikeComment[]
 }
