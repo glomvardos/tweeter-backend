@@ -67,7 +67,15 @@ export class UserService {
   }
 
   async deleteUser(id: number) {
-    return this.prisma.user.delete({
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+    });
+
+    if (user.firstname === 'Gerasimos' && user.lastname === 'Lomvardos') {
+      throw new ForbiddenException('Sorry, You cannot delete the test user');
+    }
+
+    return await this.prisma.user.delete({
       where: {
         id,
       },
