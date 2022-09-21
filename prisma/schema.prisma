@@ -18,6 +18,7 @@ model User {
   firstname   String
   lastname    String
   password    String
+  description String? @db.VarChar(128)
   tweets      Tweet[]
   followers   Follower[]
   following   Following[]

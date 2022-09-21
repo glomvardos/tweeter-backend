@@ -71,4 +71,60 @@ export class TweetsService {
 
     return tweets;
   }
+
+  async userTweets(userId: number) {
+    const tweets = await this.prisma.tweet.findMany({
+      where: {
+        userId,
+      },
+      include: {
+        user: {
+          select: {
+            firstname: true,
+            lastname: true,
+          },
+        },
+        likes: {
+          where: {
+            userId,
+          },
+        },
+        savedTweets: {
+          where: {
+            userId,
+          },
+        },
+        _count: {
+          select: {
+            savedTweets: true,
+          },
+        },
+        comments: {
+          select: {
+            id: true,
+            createdAt: true,
+            description: true,
+            user: {
+              select: {
+                firstname: true,
+                lastname: true,
+              },
+            },
+            _count: {
+              select: {
+                likes: true,
+              },
+            },
+            likes: {
+              where: {
+                userId,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return tweets;
+  }
 }

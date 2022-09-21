@@ -40,12 +40,14 @@ export class UserService {
             firstname: dto.firstname,
             lastname: dto.lastname,
             email: dto.email.toLowerCase(),
+            description: dto.description,
             password: await argon.hash(dto.password),
           }
         : {
             firstname: dto.firstname,
             lastname: dto.lastname,
             email: dto.email.toLowerCase(),
+            description: dto.description,
           };
 
       const user = await this.prisma.user.update({

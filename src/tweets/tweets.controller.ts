@@ -18,4 +18,9 @@ export class TweetsController {
   getTweets(@GetUser('id') userId: number) {
     return this.tweetsService.getTweets(userId);
   }
+
+  @Get('my-tweets')
+  userTweets(@GetUser('id') userId: number) {
+    return this.tweetsService.userTweets(userId);
+  }
 }
